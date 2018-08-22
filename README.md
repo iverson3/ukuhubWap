@@ -1,6 +1,26 @@
 # ukuhubwap
 
-> wap of ukuhub
+> ukuhub项目的Web app部分
+> 涉及到的 vue相关技术： 
+
+> vuex                   state管理
+
+> vue-Router             vue路由
+
+> vue-Resource           http请求 (支持拦截器)
+
+> vuex-along             state持久化 解决页面刷新丢失state (作为vuex插件使用) 
+
+> vuex-router-sync       将router状态放入vuex进行管理
+
+> vant-ui                移动端 web组件库
+
+> vue-navigation         导航缓存 (前进刷新 后退不刷新)
+
+> fastclick              移动端双击
+
+> date-fns               日期函数库
+
 
 ## Build Setup
 
