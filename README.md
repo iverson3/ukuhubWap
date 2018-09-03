@@ -25,7 +25,13 @@
 
 ## 项目截图
 
-![首页](screenshots/首页.png 200x)
+![首页](screenshots/首页.png)
+![曲谱列表页](screenshots/曲谱列表页.png)
+![曲谱详情页](screenshots/曲谱详情页.png)
+
+![活动列表页](screenshots/活动列表页.png)
+![活动详情页](screenshots/活动详情页.png)
+![活动报名列表](screenshots/活动报名列表.png)
 
 ## Build Setup
 
