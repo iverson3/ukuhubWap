@@ -25,7 +25,7 @@
 
 ## 项目截图
 
-![首页](screenshots/首页.png =200x)
+![首页](screenshots/首页.png 200x)
 
 ## Build Setup
 
