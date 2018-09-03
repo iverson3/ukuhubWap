@@ -166,6 +166,26 @@ const actions = {
         })
     })
   },
+  incrementView: function ({commit, state}, payload) {
+    return new Promise((resolve, reject) => {
+      Vue.http.post(
+        '/api/activity/incrementView',
+        {'id': state.curId},
+        {emulateJSON: true}
+      )
+        .then(res => res.json())
+        .then(res => {
+          if (res.success) {
+            resolve('success')
+          } else {
+            resolve('fail')
+          }
+        })
+        .catch(err => {
+          reject('fail')
+        })
+    })
+  },
   initData ({commit}) {
     commit('clearActivityList')
     commit('clearMemberList')

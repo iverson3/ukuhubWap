@@ -35,7 +35,7 @@ export default {
     .hello h2 {
         margin-top: 20px;
         text-align: center;
-        color: #666666;
+        color: #0080FF;
     }
     .hello p {
         margin-top: 200px;

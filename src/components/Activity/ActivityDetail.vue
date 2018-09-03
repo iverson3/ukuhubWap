@@ -9,7 +9,7 @@
             <van-icon name="share" slot="right"></van-icon>
         </van-nav-bar>
         <div class="activity-des">
-            <div><img :src="activityDetail.pic"/></div>
+            <div class="activity-pic"><img :src="activityDetail.pic"/></div>
             <div>
                 <p class="activity-title">{{activityDetail.name}}</p>
             </div>
@@ -22,7 +22,9 @@
             </div>
             <div>
                 <p class="activity-content-label">活动详情：</p>
-                <div class="activity-content" v-html="activityDetail.content">{{activityDetail.content}}</div>
+                <div class="activity-content-div">
+                    <div class="activity-content" v-html="activityDetail.content">{{activityDetail.content}}</div>
+                </div>
             </div>
 
             <div class="activity-member-list">
@@ -111,6 +113,7 @@ export default {
     this.activityDetail = this.curActivityDetail
     this.getMemberList()
     this.initDetailData()
+    this.incrementView()
   },
   activated () {
     // back 时会调用的钩子函数
@@ -126,7 +129,16 @@ export default {
     }),
 
     activityTime: function () {
-      return this.activityDetail.start_time.substr(5, 11) + ' - ' + this.activityDetail.end_time.substr(11, 5)
+      const m_start = parseInt(this.activityDetail.start_time.substr(5, 2))
+      const d_start = parseInt(this.activityDetail.start_time.substr(8, 2))
+      const m_end = parseInt(this.activityDetail.end_time.substr(5, 2))
+      const d_end = parseInt(this.activityDetail.end_time.substr(8, 2))
+      // 判断活动开始时间和结束时间是否位于同一天之内
+      if (m_start === m_end && d_start === d_end) {
+        return this.activityDetail.start_time.substr(5, 11) + ' - ' + this.activityDetail.end_time.substr(11, 5)
+      } else {
+        return this.activityDetail.start_time.substr(5, 11) + '至' + this.activityDetail.end_time.substr(5, 11)
+      }
       // return this.$format(new Date(parseInt(this.activityDetail.start_time) * 1000), 'MM月DD日 HH:mm') + ' - ' + this.$format(new Date(parseInt(this.activityDetail.end_time) * 1000), 'HH:mm')
     },
     // 活动是否已结束
@@ -158,7 +170,8 @@ export default {
     ]),
     ...mapActions('activity', [
       'getMemberList',
-      'initDetailData'
+      'initDetailData',
+      'incrementView'
     ]),
 
     backto () {
@@ -180,8 +193,8 @@ export default {
     .activity-des {
         margin-top: 46px;
     }
-    .activity-des img {
-        max-width: 100%;
+    .activity-pic img {
+        width: 100%;
     }
     .activity-title {
         font-size: 25px;
@@ -191,8 +204,14 @@ export default {
         color: gray;
         padding: 5px 0 5px 15px;
     }
+    .activity-content-div img {
+        max-width: 100%;
+    }
     .activity-content {
         padding: 0 15px 20px 15px;
+    }
+    .activity-content img {
+        max-width: 100%;
     }
     .activity-member-list {
         width: 100%;

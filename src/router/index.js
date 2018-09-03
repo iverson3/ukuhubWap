@@ -58,7 +58,10 @@ const routes = [
   {
     path: '/music/detail',
     name: 'MusicDetail',
-    component: MusicDetail
+    component: MusicDetail,
+    meta: {
+      scrollToTop: true
+    }
   },
   {
     path: '/activity/list',
@@ -68,7 +71,10 @@ const routes = [
   {
     path: '/activity/detail',
     name: 'ActivityDetail',
-    component: ActivityDetail
+    component: ActivityDetail,
+    meta: {
+      scrollToTop: true
+    }
   },
   {
     path: '/activity/join',

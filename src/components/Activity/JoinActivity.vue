@@ -58,7 +58,8 @@
                                 accept="image/jpeg, image/png, image/jpg, image/gif, image/bmp"
                                 :max-size="maxSize"
                                 multiple>
-                            <van-icon name="photograph" size="30" color="gray"></van-icon>
+                            <!--<van-icon name="photograph" size="30" color="gray"></van-icon>-->
+                            <img :src="uploadIcon" class="activity-uploader-img" />
                         </van-uploader>
                         <span v-show="isUploading">图片上传中...</span>
                     </div>
@@ -80,9 +81,10 @@
                         label="备注信息"
                         placeholder="随便说点什么吧...">
                 </van-field>
-
-                <div class="activity-submit" @click="joinToActivity()">提交报名</div>
             </van-cell-group>
+            <div class="activity-submit-div">
+                <div class="activity-submit" @click="joinToActivity()">提交报名</div>
+            </div>
         </div>
 
         <van-actionsheet v-model="conditionType" :actions="typeActions" cancel-text="取消"></van-actionsheet>
@@ -123,6 +125,7 @@ export default {
       formData: null,
       isUploading: false,
       required: true,
+      uploadIcon: '../static/images/icons/upload-img2.png',
 
       isNeedPicOrUrl: true,
       showPic: true,
@@ -392,6 +395,8 @@ export default {
     }
     .activity-tips p {
         padding-left: 10px;
+        color: red;
+        font-size: 11px;
     }
     .member-pic {
         max-width: 80%;
@@ -401,7 +406,12 @@ export default {
         border-bottom: 1px solid #e5e5e5;
     }
     .pic-upload-div {
-        margin-top: 18px;
+        /*margin-top: 18px;*/
+    }
+    .activity-uploader-img {
+        height: 31px;
+        position: relative;
+        top: 7px;
     }
     .pic1-label {
         display: inline-block;
@@ -412,14 +422,20 @@ export default {
         padding-left: 10px;
         padding-right: 30px;
     }
-    .activity-submit {
+    .activity-submit-div {
         width: 100%;
-        height: 32px;
-        text-align: center;
-        color: white;
+        height: 35px;
+        margin-top: 20px;
+    }
+    .activity-submit {
+        width: 96%;
+        height: 100%;
+        margin: 0 auto;
+        line-height: 35px;
         background-color: #5390e4;
+        text-align: center;
         font-size: 20px;
-        padding-top: 6px;
+        color: white;
         border-radius: 6px;
     }
 </style>

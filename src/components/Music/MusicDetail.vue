@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
-import { Panel, Lazyload, ImagePreview, NavBar, Icon, Tag } from 'vant'
+import { mapMutations, mapGetters, mapActions, mapState } from 'vuex'
+import { Panel, Lazyload, ImagePreview, NavBar, Icon, Tag, Toast } from 'vant'
 
 export default {
   name: 'MusicDetail',
@@ -50,7 +50,8 @@ export default {
     [ImagePreview.name]: ImagePreview,
     [NavBar.name]: NavBar,
     [Icon.name]: Icon,
-    [Tag.name]: Tag
+    [Tag.name]: Tag,
+    [Toast.name]: Toast
   },
   data () {
     return {
@@ -70,15 +71,37 @@ export default {
   created () {
     this.setCurId(this.$route.query.id)
     this.musicDetail = this.curMusicDetail
+
+    const me = this
+    // 应对特殊情况，比如用户通过微信公众号获取曲谱详情链接直接访问
+    if (this.musiclist.length === 0 || this.musicDetail.name === undefined) {
+      this.setFromWhere('')
+      this.getMusicDetail().then((res) => {
+        if (res === 'success') {
+          me.musicDetail = me.curMusicDetail
+        } else {
+          me.$toast('获取曲谱失败')
+        }
+      })
+    }
+    this.incrementView()
   },
   computed: {
+    ...mapState('music', [
+      'musiclist'
+    ]),
     ...mapGetters('music', [
       'curMusicDetail'
     ])
   },
   methods: {
     ...mapMutations('music', [
-      'setCurId'
+      'setCurId',
+      'setFromWhere'
+    ]),
+    ...mapActions('music', [
+      'incrementView',
+      'getMusicDetail'
     ]),
 
     backto () {

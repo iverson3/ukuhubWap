@@ -16,18 +16,20 @@
                 <van-panel v-for="(item, index) in activitylist" class="music-item" :key="index">
                     <router-link :to="{ name: 'ActivityDetail', query: {id: item.id}}">
                         <van-card
-                                class="music-card"
-                                :title="item.name">
+                                class="activity-card">
+                            <div slot="title">
+                                <p class="activity-name">{{ item.name }}</p>
+                            </div>
                             <div slot="thumb" class="activity-pic-div">
                                 <img v-lazy="item.pic" class="music-pic" @click="previewImg(item.pic)"/>
                             </div>
                             <div slot="desc">
-                                <p class="music-author">发起者：{{ item.author }}</p>
+                                <p class="activity-author">发起者：{{ item.author }}</p>
                             </div>
-                            <div slot="footer">
+                            <div slot="footer" class="activity-item-info">
                                 <p class="activity-time">{{ item.start_time | subtime }}</p>
-                                <van-tag>浏览量 {{item.views}}</van-tag>
-                                <van-tag>转发 {{item.forwards}}</van-tag>
+                                <van-tag><img :src="viewsIcon" /> {{item.views}}</van-tag>
+                                <van-tag><img :src="forwardsIcon" /> {{item.forwards}}</van-tag>
                             </div>
                         </van-card>
                     </router-link>
@@ -56,7 +58,10 @@ export default {
   data () {
     return {
       finished: true,
-      offset: 1000
+      offset: 1000,
+
+      viewsIcon: '../static/images/icons/views.png',
+      forwardsIcon: '../static/images/icons/share-white.png'
     }
   },
   computed: mapState({
@@ -104,12 +109,33 @@ export default {
     .activity-list {
         margin-top: 45px;
     }
+    .activity-name {
+        color: #232222;
+        font-family: "微软雅黑";
+        margin-top: 3px;
+        margin-bottom: 0;
+        height: 40px;
+        line-height: 20px;
+        word-break: break-all;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+    .activity-item-info img {
+        height: 9px;
+    }
+    .activity-author {
+        font-size: 12px;
+        color: gray;
+    }
     .activity-pic-div {
         width: 100%;
         height: 100%;
         overflow: hidden;
     }
     .activity-time {
+        color: gray;
         font-size: 13px;
         margin-bottom: 2px;
         text-align: right;

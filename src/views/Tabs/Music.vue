@@ -17,9 +17,9 @@
 
         <div class="filter">
             <van-row gutter="20" class="filter-list-row">
-                <van-col span="8" class="filter-item"><span @click="showTypeCondition">{{type}}<i class="bottom-arrow"></i></span></van-col>
-                <van-col span="8" class="filter-item"><span @click="showLevelCondition">{{level}}<i class="bottom-arrow"></i></span></van-col>
-                <van-col span="8" class="filter-item"><span @click="showSortCondition">{{sort}}<i class="bottom-arrow"></i></span></van-col>
+                <van-col span="8" class="filter-item"><span @click="showTypeCondition">{{type}}<img :src="downIcon"/></span></van-col>
+                <van-col span="8" class="filter-item"><span @click="showLevelCondition">{{level}}<img :src="downIcon"/></span></van-col>
+                <van-col span="8" class="filter-item"><span @click="showSortCondition">{{sort}}<img :src="downIcon"/></span></van-col>
             </van-row>
             <van-actionsheet v-model="conditionType" :actions="typeActions" cancel-text="取消"></van-actionsheet>
             <van-actionsheet v-model="conditionLevel" :actions="levelActions" cancel-text="取消"></van-actionsheet>
@@ -36,19 +36,21 @@
                     <van-panel v-for="(item, index) in musiclist" class="music-item" :key="index">
                         <router-link :to="{ name: 'MusicDetail', query: {id: item.id}}">
                         <van-card
-                            class="music-card"
-                            :title="item.name">
+                            class="music-card">
+                            <div slot="title">
+                                <p class="music-name">{{ item.name }}</p>
+                            </div>
                             <div slot="thumb" class="music-pic-div">
                                 <img v-lazy="item.url" class="music-pic" @click="previewImg(item.url)"/>
                             </div>
                             <div slot="desc">
                                 <p class="music-author">by {{ item.author }}</p>
                             </div>
-                            <div slot="footer">
+                            <div slot="footer" class="music-item-info">
                                 <p class="music-time">{{ item.created_at | subtime }}</p>
-                                <van-tag>浏览量 {{item.views}}</van-tag>
-                                <van-tag>点赞 {{item.likes}}</van-tag>
-                                <van-tag>转发 {{item.forwards}}</van-tag>
+                                <van-tag><img :src="viewsIcon" /> {{item.views}}</van-tag>
+                                <van-tag><img :src="likesIcon" /> {{item.likes}}</van-tag>
+                                <van-tag><img :src="forwardsIcon" /> {{item.forwards}}</van-tag>
                             </div>
                         </van-card>
                         </router-link>
@@ -164,6 +166,10 @@ export default {
           callback: this.onSortConfirm
         }
       ],
+      downIcon: '../static/images/icons/arrow-down.png',
+      viewsIcon: '../static/images/icons/views.png',
+      likesIcon: '../static/images/icons/like-white.png',
+      forwardsIcon: '../static/images/icons/share-white.png',
 
       isMute: false,
       isClose: true,
@@ -285,6 +291,12 @@ export default {
     .filter-item {
         padding-top: 7px;
     }
+    .filter-item img {
+        height: 15px;
+        padding-left: 4px;
+        position: relative;
+        top: 2px;
+    }
     .music-pic-div {
         width: 100%;
         height: 100%;
@@ -292,6 +304,19 @@ export default {
     }
     .music-card {
         margin-top: -18px;
+    }
+    .music-name {
+        color: #232222;
+        font-family: "微软雅黑";
+        margin-top: 3px;
+        margin-bottom: 0;
+        height: 40px;
+        line-height: 20px;
+        word-break: break-all;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
     }
     .music-pic {
         width: 100%;
@@ -301,10 +326,15 @@ export default {
         font-size: 13px;
         margin-bottom: 2px;
         text-align: right;
+        color: gray;
     }
     .music-author {
         font-size: 13px;
         margin-top: 5px;
+        color: gray;
+    }
+    .music-item-info img {
+        height: 9px;
     }
     .name-search {
         touch-action: none;
@@ -322,27 +352,5 @@ export default {
         width: 100%;
         height: auto;
         /*z-index: 2;*/
-    }
-
-    .bottom-arrow:before {
-        content: "";
-        border: 7px solid #578ad2;
-        border-bottom: none;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        position: relative;
-        top: 13px;
-        left: 7px;
-        border-radius: 2px;
-    }
-    .bottom-arrow:after {
-        content: "";
-        border: 6px solid #fff;
-        border-bottom: none;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        position: relative;
-        top: 11px;
-        left: -6px;
     }
 </style>
